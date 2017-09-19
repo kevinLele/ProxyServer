@@ -14,7 +14,7 @@
     </encoder>
   </appender>
   
-  <logger name="com.hq.CloudPlatform.BaseFrame" level="debug"/>
+  <logger name="com.hq.CloudPlatform.ProxyServer" level="debug"/>
   
   <root level="info">
     <appender-ref ref="STDOUT" />

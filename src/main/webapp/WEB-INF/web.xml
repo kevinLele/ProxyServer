@@ -179,7 +179,7 @@
     <!-- 用于对restful允许跨域访问的响应设置 -->
     <filter>
         <filter-name>CrossDomainFilter</filter-name>
-        <filter-class>com.hq.CloudPlatform.BaseFrame.sys.filter.CrossDomainFilter</filter-class>
+        <filter-class>com.hq.CloudPlatform.ProxyServer.sys.filter.CrossDomainFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -193,7 +193,7 @@
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.hq.CloudPlatform.BaseFrame.restful</param-value>
+            <param-value>com.hq.CloudPlatform.ProxyServer.restful</param-value>
         </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.classnames</param-name>

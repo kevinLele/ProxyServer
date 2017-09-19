@@ -15,9 +15,9 @@
         <property name="caches">
             <set>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-                      p:name="#{T(com.hq.CloudPlatform.BaseFrame.sys.Constants).CACHE_NAME}"/>
+                      p:name="com.hq.CloudPlatform.ProxyServererrame.sys.Constants).CACHE_NAME}"/>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
-                      p:name="#{T(com.hq.CloudPlatform.BaseFrame.sys.Constants).CFG_CACHE_NAME}"/>
+                      p:name="com.hq.CloudPlatform.ProxyServererrame.sys.Constants).CFG_CACHE_NAME}"/>
             </set>
         </property>
     </bean>-->

@@ -17,6 +17,6 @@
         <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
     </settings>
     <mappers>
-        <package name="com.hq.CloudPlatform.BaseFrame.mapper" />
+        <package name="com.hq.CloudPlatform.ProxyServer.mapper" />
     </mappers>
  </configuration>
