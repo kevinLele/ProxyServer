@@ -254,6 +254,13 @@
             <artifactId>spring-data-redis</artifactId>
             <version>${spring-redis-data.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.membrane-soa</groupId>
+            <artifactId>service-proxy-core</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
