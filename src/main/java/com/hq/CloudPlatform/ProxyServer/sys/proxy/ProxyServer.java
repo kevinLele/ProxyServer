@@ -2,6 +2,7 @@ package com.hq.CloudPlatform.ProxyServer.sys.proxy;
 
 import com.hq.CloudPlatform.ProxyServer.sys.proxy.Interceptor.AuthInterceptor;
 import com.hq.CloudPlatform.ProxyServer.sys.proxy.Interceptor.CacheInterceptor;
+import com.hq.CloudPlatform.ProxyServer.sys.proxy.Interceptor.MyRewriteInterceptor;
 import com.hq.CloudPlatform.ProxyServer.sys.proxy.Interceptor.URLAnalysisInterceptor;
 import com.hq.CloudPlatform.ProxyServer.utils.ConfigHelper;
 import com.predic8.membrane.core.HttpRouter;
@@ -48,16 +49,12 @@ public class ProxyServer {
         URLAnalysisInterceptor urlAnalysisInterceptor = new URLAnalysisInterceptor();
         AuthInterceptor authInterceptor = new AuthInterceptor();
         CacheInterceptor cacheInterceptor = new CacheInterceptor();
-        //MyRewriteInterceptor rewriteInterceptor = new MyRewriteInterceptor();
-
-        List<com.predic8.membrane.core.interceptor.rewrite.RewriteInterceptor.Mapping> mappings = new ArrayList<>();
-        mappings.add(new com.predic8.membrane.core.interceptor.rewrite.RewriteInterceptor.Mapping(PROXY_PATH + "(.*)", "/$1", "rewrite"));
-        //rewriteInterceptor.setMappings(mappings);
+        MyRewriteInterceptor rewriteInterceptor = new MyRewriteInterceptor();
 
         sp.getInterceptors().add(urlAnalysisInterceptor);
         //sp.getInterceptors().add(authInterceptor);
         //sp.getInterceptors().add(cacheInterceptor);
-        //sp.getInterceptors().add(rewriteInterceptor);
+        sp.getInterceptors().add(rewriteInterceptor);
         HttpRouter router = new HttpRouter();
 
         try {

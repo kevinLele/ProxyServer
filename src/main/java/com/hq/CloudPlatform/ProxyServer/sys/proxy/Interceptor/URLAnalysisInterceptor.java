@@ -96,7 +96,7 @@ public class URLAnalysisInterceptor extends AbstractInterceptor {
                 exc.getDestinations().clear();
                 /*exc.getDestinations().add("http://localhost:80/ProxyServer/restful/sys/testJson");*/
                 /*exc.getDestinations().add("http://localhost:80/ProxyServer/restful/sys/testImage");*/
-                exc.getDestinations().add("http://localhost:80/ProxyServer/restful/sys/testFile");
+                /*exc.getDestinations().add("http://localhost:80/ProxyServer/restful/sys/testFile");*/
             }
         } else {
             String msg = "URL[" + originalRequestUri + "]为不合法的请求地址！必须是以“/proxy/{type}/{key}”开头！";
