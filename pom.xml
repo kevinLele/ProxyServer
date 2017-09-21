@@ -264,7 +264,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
-            <version>9.4.7.RC0</version>
+            <version>9.3.13.v20161014</version>
         </dependency>
     </dependencies>
 
@@ -278,6 +278,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.3.13.v20161014</version>
                 <configuration>
+                    <contextXml>src/test/java/jetty-contexts.xml</contextXml>
                     <webAppConfig>
                         <contextPath>/${project.build.finalName}</contextPath>
                     </webAppConfig>
