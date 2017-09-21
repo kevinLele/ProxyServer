@@ -20,9 +20,9 @@ import java.net.URL;
  * Created by Administrator on 9/13/2016.
  * 用于缓存响应结果的拦截器
  */
-public class RmCacheInterceptor extends AbstractInterceptor {
+public class CacheInterceptor extends AbstractInterceptor {
 
-    /*private static final Logger log = LoggerFactory.getLogger(RmCacheInterceptor.class);
+    /*private static final Logger log = LoggerFactory.getLogger(CacheInterceptor.class);
 
     public static final String CACHE_CLUSTER_NAME = ConfigHelper.getValue("ProxyServer.cache.clusterServerName");
 
@@ -32,7 +32,7 @@ public class RmCacheInterceptor extends AbstractInterceptor {
 
     private static final boolean isCacheFile = Boolean.valueOf(ConfigHelper.getValue("ProxyServer.cache.toFile"));
 
-    public RmCacheInterceptor() {
+    public CacheInterceptor() {
 
         super();
         setFlow(Flow.Set.REQUEST_RESPONSE);

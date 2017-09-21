@@ -6,13 +6,13 @@ import com.predic8.membrane.core.interceptor.AbstractInterceptor;
  * Created by ZK on 8/25/2016.
  * 用于对用户进行鉴权的拦截器
  */
-public class RmAuthInterceptor extends AbstractInterceptor {
+public class AuthInterceptor extends AbstractInterceptor {
 
-    /*private static final Logger log = LoggerFactory.getLogger(RmAuthInterceptor.class);
+    /*private static final Logger log = LoggerFactory.getLogger(AuthInterceptor.class);
 
     private IUserAuthService userAuthService;
 
-    public RmAuthInterceptor() {
+    public AuthInterceptor() {0
 
         super();
         setFlow(Flow.Set.REQUEST);

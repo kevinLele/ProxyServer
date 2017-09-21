@@ -15,9 +15,9 @@ import java.util.ListIterator;
  * Created by ZK on 8/25/2016.
  * 用于资源管理的URL重写拦截器
  */
-public class RmRewriteInterceptor extends RewriteInterceptor {
+public class MyRewriteInterceptor extends com.predic8.membrane.core.interceptor.rewrite.RewriteInterceptor {
 
-    /*private static final Logger log = LoggerFactory.getLogger(RmRewriteInterceptor.class);
+    /*private static final Logger log = LoggerFactory.getLogger(MyRewriteInterceptor.class);
 
     @Override
     public Outcome handleRequest(Exchange exc) throws Exception {
