@@ -1,6 +1,5 @@
 package com.hq.CloudPlatform.ProxyServer.sys.proxy.Interceptor;
 
-import com.hq.CloudPlatform.ProxyServer.sys.proxy.ProxyServer;
 import com.predic8.membrane.core.exchange.Exchange;
 import com.predic8.membrane.core.http.Response;
 import com.predic8.membrane.core.interceptor.AbstractInterceptor;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,7 +43,6 @@ public class URLAnalysisInterceptor extends AbstractInterceptor {
         String path = originalRequestUri.getPath().substring(1); //去掉第一个"/"字符
         String query = StringUtils.defaultString(originalRequestUri.getQuery());
 
-        //如果不是有效的代理地址则不进行任何处理并返回错误提示
         if (StringUtils.isNotBlank(path)) {
             sortedUrl.append(path);
             String[] pathItems = path.split("/");
@@ -58,7 +55,7 @@ public class URLAnalysisInterceptor extends AbstractInterceptor {
                     || !"proxy".equals(pathItems[0])
                     || StringUtils.isBlank(pathItems[1])
                     || StringUtils.isBlank(pathItems[2])) {
-                String msg = "不合法的请求地址！URL[" + originalRequestUri + "]! 合法的请求地址必须是以“/proxy/{type}/{key}”开头的！";
+                String msg = "URL[" + originalRequestUri + "]为不合法的请求地址！必须是以“/proxy/{type}/{key}”开头！";
                 exc.setResponse(getBadResponse(msg));
 
                 log.warn(msg);
@@ -71,10 +68,8 @@ public class URLAnalysisInterceptor extends AbstractInterceptor {
                 if (queryParams.containsKey("authToken")) {
                     authToken = queryParams.getString("authToken");
 
-                    /*
-                    获取authKey后，不需要再传该参数，这样在拼装url时就
-                    没有authKey，提高缓存命中率
-                    */
+                    // 获取authKey后，不需要再传该参数，这样在拼装url时就
+                    // 没有authKey，提高缓存命中率
                     queryParams.remove("authToken");
                 }
 
@@ -97,9 +92,14 @@ public class URLAnalysisInterceptor extends AbstractInterceptor {
                 exc.setProperty("appendPath", appendPath.toString());
                 exc.setProperty("query", queryString);
                 exc.setProperty("sortedUrl", sortedUrl.toString());
+
+                exc.getDestinations().clear();
+                exc.getDestinations().add("http://localhost:8080/aaa");
+                exc.getDestinations().add("http://localhost:8081/bbb");
+                exc.getDestinations().add("http://localhost:8082/ccc");
             }
         } else {
-            String msg = "不合法的请求地址！URL[" + originalRequestUri + "]! 合法的请求地址必须是以“/proxy/{type}/{key}”开头的！";
+            String msg = "URL[" + originalRequestUri + "]为不合法的请求地址！必须是以“/proxy/{type}/{key}”开头！";
             exc.setResponse(getBadResponse(msg));
 
             log.warn(msg);
