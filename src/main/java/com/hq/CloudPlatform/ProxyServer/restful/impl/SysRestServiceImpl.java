@@ -7,6 +7,7 @@ import com.hq.CloudPlatform.ProxyServer.restful.view.JsonViewObject;
 import com.hq.CloudPlatform.ProxyServer.restful.view.User;
 import com.hq.CloudPlatform.ProxyServer.sys.Constants;
 import com.hq.CloudPlatform.ProxyServer.utils.SysUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -19,6 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Path;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 @Path("sys")
 @Component
@@ -106,6 +112,45 @@ public class SysRestServiceImpl implements ISysRestService {
                 .queryParam("appCode", Constants.APP_CODE);
 
         return client.request().get(String.class);
+    }
+
+    @Override
+    public String testJson() throws ServiceException {
+        Map<String, String> testResult = new HashMap<>();
+        testResult.put("test1", "hello");
+        testResult.put("test2", "world");
+
+        return JSON.toJSONString(testResult);
+    }
+
+    @Override
+    public Response testImage() throws ServiceException {
+        Response.ResponseBuilder builder = Response
+                .ok((StreamingOutput) output -> {
+                    FileUtils.copyFile(new File("d:/test2.png"), output);
+                });
+
+        builder.header("content-type", "image/png").header("Cache-Control", "no-cache");
+
+        return builder.build();
+    }
+
+    @Override
+    public Response testFile() throws ServiceException {
+        File file = new File("F:\\iso\\windows\\cn_windows_7_ultimate_with_sp1_x64_dvd_u_677408.iso");
+
+        Response.ResponseBuilder builder = Response
+                .ok((StreamingOutput) output -> {
+                    //FileUtils.copyFile(new File("d:/test3.txt"), output);
+                    FileUtils.copyFile(file, output);
+                });
+
+        builder.header("Content-disposition", "attachment;filename=" + "test5.iso");
+
+        builder.header("content-type", "application/octet-stream").header("Cache-Control", "no-cache");
+        builder.header("Content-Length", file.length());
+
+        return builder.build();
     }
 
 

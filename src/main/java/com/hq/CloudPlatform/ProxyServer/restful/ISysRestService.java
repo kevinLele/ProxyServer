@@ -5,6 +5,7 @@ import com.hq.CloudPlatform.ProxyServer.sys.Constants;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by Administrator on 7/4/2017.
@@ -36,4 +37,19 @@ public interface ISysRestService {
     @Path("getCurrentUserPermissionsTree")
     @Produces(Constants.MediaType.APPLICATION_JSON)
     String getCurrentUserPermissionsTree() throws ServiceException;
+
+    @GET
+    @Path("testJson")
+    @Produces(Constants.MediaType.APPLICATION_JSON)
+    String testJson() throws ServiceException;
+
+    @GET
+    @Path("testImage")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    Response testImage() throws ServiceException;
+
+    @GET
+    @Path("testFile")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    Response testFile() throws ServiceException;
 }
