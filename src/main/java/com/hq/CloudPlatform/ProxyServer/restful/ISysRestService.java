@@ -44,6 +44,10 @@ public interface ISysRestService {
     String testJson() throws ServiceException;
 
     @GET
+    @Path("testParams")
+    String testParams(@QueryParam("param1") String param1, @QueryParam("param2") String param2) throws ServiceException;
+
+    @GET
     @Path("testImage")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     Response testImage() throws ServiceException;

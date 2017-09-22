@@ -124,6 +124,11 @@ public class SysRestServiceImpl implements ISysRestService {
     }
 
     @Override
+    public String testParams(String param1, String param2) throws ServiceException {
+        return "Result:" + param1 + " | " + param2;
+    }
+
+    @Override
     public Response testImage() throws ServiceException {
         Response.ResponseBuilder builder = Response
                 .ok((StreamingOutput) output -> {
