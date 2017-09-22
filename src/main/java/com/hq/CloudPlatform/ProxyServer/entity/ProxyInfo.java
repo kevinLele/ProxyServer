@@ -13,4 +13,6 @@ public class ProxyInfo extends BaseEntity {
     private String proxyUrl;
 
     private String type;
+
+    private String urlKey;
 }

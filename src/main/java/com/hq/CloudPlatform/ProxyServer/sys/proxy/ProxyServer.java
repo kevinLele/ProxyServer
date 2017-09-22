@@ -21,8 +21,6 @@ public class ProxyServer {
 
     public static final int PROXY_PORT = 0;
 
-    public static final String PROXY_PATH = "/proxy/";
-
     public static void main(String[] args) {
         try {
             startProxy();
@@ -35,7 +33,7 @@ public class ProxyServer {
         log.info("Starting Proxy Server....begin.....");
 
         int proxyPort = Integer.parseInt(ConfigHelper.getValue("ProxyServer.port"));
-        ServiceProxyKey key = new ServiceProxyKey("*", "*", PROXY_PATH + ".+", proxyPort);
+        ServiceProxyKey key = new ServiceProxyKey("*", "*", "*", proxyPort);
 
         // 设置为true表示启动路径过滤，否则只进行IP和端口的过滤
         // 此处设置为false的目的是过滤的工作都交给URLAnalysisInterceptor来统一处理，不使用系统默认的处理方式

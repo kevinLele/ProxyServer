@@ -20,7 +20,9 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class URLAnalysisInterceptor extends AbstractInterceptor {
 
-    private static String runningMode = ConfigHelper.getValue("running.mode");
+    private static final String runningMode = ConfigHelper.getValue("running.mode");
+
+    private static final String prefix = ConfigHelper.getValue("ProxyServer.prefix");
 
     public URLAnalysisInterceptor() {
         super();
@@ -42,12 +44,12 @@ public class URLAnalysisInterceptor extends AbstractInterceptor {
             MultiMap<String> queryParams = new MultiMap<>();
             UrlEncoded.decodeTo(query, queryParams, StandardCharsets.UTF_8);
 
-            //路径中未包含/proxy/{type}/{key}
+            //路径中未包含/{prefix}/{type}/{key}
             if (null == pathItems || pathItems.length < 3
-                    || !"proxy".equals(pathItems[0])
+                    || !prefix.equals(pathItems[0])
                     || StringUtils.isBlank(pathItems[1])
                     || StringUtils.isBlank(pathItems[2])) {
-                String msg = "URL[" + originalRequestUri + "]为不合法的请求地址！必须是以“/proxy/{type}/{key}”开头！";
+                String msg = "URL[" + originalRequestUri + "]为不合法的请求地址！必须是以“/" + prefix + "/{type}/{key}”开头！";
                 exc.setResponse(getBadResponse(msg));
 
                 log.warn(msg);
@@ -82,7 +84,7 @@ public class URLAnalysisInterceptor extends AbstractInterceptor {
                 exc.setProperty("queryParams", queryParams);
             }
         } else {
-            String msg = "URL[" + originalRequestUri + "]为不合法的请求地址！必须是以“/proxy/{type}/{key}”开头！";
+            String msg = "URL[" + originalRequestUri + "]为不合法的请求地址！必须是以“/" + prefix + "/{type}/{key}”开头！";
             exc.setResponse(getBadResponse(msg));
 
             log.warn(msg);

@@ -8,6 +8,7 @@
         <result column="original_url" property="originalUrl" javaType="java.lang.String"/>
         <result column="proxy_url" property="proxyUrl" javaType="java.lang.String"/>
         <result column="type" property="type" javaType="java.lang.String"/>
+        <result column="url_key" property="urlKey" javaType="java.lang.String"/>
     </resultMap>
 
     <!-- table: ps_proxy_info -->
@@ -15,12 +16,13 @@
         t.id,
         t.original_url,
         t.proxy_url,
-        t.type
+        t.type,
+        t.url_key
     </sql>
 
     <insert id="save" parameterType="com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo">
-        insert into ps_proxy_info(id,original_url,proxy_url,type)
-        values(#{id},#{originalUrl},#{proxyUrl},#{type})
+        insert into ps_proxy_info(id,original_url,proxy_url,type,url_key)
+        values(#{id},#{originalUrl},#{proxyUrl},#{type},#{urlKey})
     </insert>
 
     <update id="update" parameterType="com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo">
