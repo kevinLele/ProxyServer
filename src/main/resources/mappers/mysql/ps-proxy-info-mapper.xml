@@ -3,145 +3,34 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hq.CloudPlatform.ProxyServer.mapper.ProxyInfoMapper">
 
-    <resultMap type="com.hq.CloudPlatform.RMC.entity.Subject" id="subjectResultMap">
+    <resultMap type="com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo" id="proxyInfoResultMap">
         <result column="id" property="id" javaType="java.lang.String"/>
-        <result column="name" property="name" javaType="java.lang.String"/>
-        <result column="description" property="description" javaType="java.lang.String"/>
-        <result column="icon" property="icon" javaType="java.lang.String"/>
-        <result column="create_date" property="createDate" javaType="java.util.Date"/>
-        <result column="creator_id" property="creatorId" javaType="java.lang.String"/>
-        <result column="creator" property="creator" javaType="java.lang.String"/>
-        <result column="update_date" property="updateDate" javaType="java.util.Date"/>
-        <result column="updater_id" property="updaterId" javaType="java.lang.String"/>
-        <result column="updater" property="updater" javaType="java.lang.String"/>
-        <result column="delete_date" property="deleteDate" javaType="java.util.Date"/>
-        <result column="deleter_id" property="deleterId" javaType="java.lang.String"/>
-        <result column="deleter" property="deleter" javaType="java.lang.String"/>
-        <result column="is_delete" property="isDelete" javaType="java.lang.String"/>
-        <result column="is_valid" property="isValid" javaType="java.lang.String"/>
-
-        <collection property="resourceList" ofType="com.hq.CloudPlatform.RMC.entity.Resource">
-            <id column="resource_id" property="id"/>
-            <result column="resource_name" property="name"/>
-            <result column="resource_type" property="type"/>
-            <result column="resource_property_id" property="propertyId"/>
-            <result column="resource_metadata_id" property="metadataId"/>
-            <result column="resource_url" property="url"/>
-            <result column="resource_icon" property="icon"/>
-            <result column="resource_use_proxy" property="useProxy"/>
-            <result column="resource_proxy_url" property="proxyUrl"/>
-            <result column="resource_use_cache" property="useCache"/>
-            <result column="resource_cache_config_id" property="cacheConfigId"/>
-            <result column="resource_org_id" property="orgId"/>
-            <result column="resource_remark" property="remark"/>
-            <result column="resource_need_audit" property="needAudit"/>
-            <result column="resource_audit_status" property="auditStatus"/>
-            <result column="resource_audit_date" property="auditDate"/>
-            <result column="resource_auditor_id" property="auditorId"/>
-            <result column="resource_auditor" property="auditor"/>
-            <result column="resource_audit_opinion" property="auditOpinion"/>
-            <result column="resource_create_date" property="createDate"/>
-            <result column="resource_creator_id" property="creatorId"/>
-            <result column="resource_creator" property="creator"/>
-            <result column="resource_update_date" property="updateDate"/>
-            <result column="resource_updater_id" property="updaterId"/>
-            <result column="resource_updater" property="updater"/>
-            <result column="resource_is_delete" property="isDelete"/>
-            <result column="resource_delete_date" property="deleteDate"/>
-            <result column="resource_deleter_id" property="deleterId"/>
-            <result column="resource_deleter" property="deleter"/>
-        </collection>
-
-        <collection property="subjectAuthorityList" ofType="com.hq.CloudPlatform.RMC.entity.SubjectAuthority">
-            <id column="subjectAuthority_id" property="id"/>
-            <result column="subjectAuthority_subject_id" property="subjectId"/>
-            <result column="subjectAuthority_target_type" property="targetType"/>
-            <result column="subjectAuthority_target_id" property="targetId"/>
-            <result column="subjectAuthority_authorize_date" property="authorizeDate"/>
-            <result column="subjectAuthority_authorizer_id" property="authorizerId"/>
-            <result column="subjectAuthority_authorizer" property="authorizer"/>
-            <result column="subjectAuthority_is_valid" property="isValid"/>
-        </collection>
-
+        <result column="original_url" property="originalUrl" javaType="java.lang.String"/>
+        <result column="proxy_url" property="proxyUrl" javaType="java.lang.String"/>
+        <result column="type" property="type" javaType="java.lang.String"/>
     </resultMap>
 
-    <!-- table: rmc_subject -->
+    <!-- table: ps_proxy_info -->
     <sql id="column">
-        t18.id,
-        t18.name,
-        t18.description,
-        t18.icon,
-        t18.create_date,
-        t18.creator_id,
-        t18.creator,
-        t18.update_date,
-        t18.updater_id,
-        t18.updater,
-        t18.delete_date,
-        t18.deleter_id,
-        t18.deleter,
-        t18.is_delete,
-        t18.is_valid
+        t.id,
+        t.original_url,
+        t.proxy_url,
+        t.type
     </sql>
 
-    <!-- table: rmc_resource -->
-    <sql id="resource-column">
-        t1.id as resource_id,
-        t1.name as resource_name,
-        t1.type as resource_type,
-        t1.property_id as resource_property_id,
-        t1.metadata_id as resource_metadata_id,
-        t1.url as resource_url,
-        t1.icon as resource_icon,
-        t1.use_proxy as resource_use_proxy,
-        t1.proxy_url as resource_proxy_url,
-        t1.use_cache as resource_use_cache,
-        t1.cache_config_id as resource_cache_config_id,
-        t1.org_id as resource_org_id,
-        t1.remark as resource_remark,
-        t1.need_audit as resource_need_audit,
-        t1.audit_status as resource_audit_status,
-        t1.audit_date as resource_audit_date,
-        t1.auditor_id as resource_auditor_id,
-        t1.auditor as resource_auditor,
-        t1.audit_opinion as resource_audit_opinion,
-        t1.create_date as resource_create_date,
-        t1.creator_id as resource_creator_id,
-        t1.creator as resource_creator,
-        t1.update_date as resource_update_date,
-        t1.updater_id as resource_updater_id,
-        t1.updater as resource_updater,
-        t1.is_delete as resource_is_delete,
-        t1.delete_date as resource_delete_date,
-        t1.deleter_id as resource_deleter_id,
-        t1.deleter as resource_deleter
-    </sql>
-
-    <!-- table: rmc_subject_authority -->
-    <sql id="subjectAuthority-column">
-        t20.id as subjectAuthority_id,
-        t20.subject_id as subjectAuthority_subject_id,
-        t20.target_type as subjectAuthority_target_type,
-        t20.target_id as subjectAuthority_target_id,
-        t20.authorize_date as subjectAuthority_authorize_date,
-        t20.authorizer_id as subjectAuthority_authorizer_id,
-        t20.authorizer as subjectAuthority_authorizer,
-        t20.is_valid as subjectAuthority_is_valid
-    </sql>
-
-    <insert id="save" parameterType="com.hq.CloudPlatform.RMC.entity.Subject">
-        insert into rmc_subject(id,name,description,icon,create_date,creator_id,creator,update_date,updater_id,updater,delete_date,deleter_id,deleter)
-        values(#{id},#{name},#{description},#{icon},#{createDate},#{creatorId},#{creator},#{updateDate},#{updaterId},#{updater},#{deleteDate},#{deleterId},#{deleter})
+    <insert id="save" parameterType="com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo">
+        insert into ps_proxy_info(id,original_url,proxy_url,type)
+        values(#{id},#{originalUrl},#{proxyUrl},#{type})
     </insert>
 
-    <update id="update" parameterType="com.hq.CloudPlatform.RMC.entity.Subject">
-        update rmc_subject t18
+    <update id="update" parameterType="com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo">
+        update ps_proxy_info t18
         <include refid="sql_update"/>
         where t18.id=#{id}
     </update>
 
     <update id="batchUpdate" parameterType="java.util.Map">
-        update rmc_subject t18
+        update ps_proxy_info t18
         <include refid="sql_update"/>
         where t18.id in
         <foreach item="item" index="index"
@@ -151,20 +40,20 @@
     </update>
 
     <delete id="deleteByWhere" parameterType="java.util.Map">
-        delete t18 from rmc_subject as t18
+        delete t18 from ps_proxy_info as t18
         <include refid="sql_where"/>
     </delete>
 
     <delete id="deleteById" parameterType="java.lang.String">
-        delete from rmc_subject where id = #{id}
+        delete from ps_proxy_info where id = #{id}
     </delete>
 
     <update id="logicDeleteById" parameterType="java.lang.String">
-        update rmc_subject t18 SET t18.is_delete=1 where t18.id=#{id}
+        update ps_proxy_info t18 SET t18.is_delete=1 where t18.id=#{id}
     </update>
 
     <delete id="batchDelete" parameterType="java.util.List">
-        delete from rmc_subject where id in
+        delete from ps_proxy_info where id in
         <foreach item="item" index="index"
                  collection="idList" open="(" separator="," close=")">
             #{item}
@@ -172,63 +61,53 @@
     </delete>
 
     <update id="logicBatchDelete" parameterType="java.util.List">
-        update rmc_subject t18 SET t18.is_delete=1 where id in
+        update ps_proxy_info t18 SET t18.is_delete=1 where id in
         <foreach item="item" index="index"
                  collection="idList" open="(" separator="," close=")">
             #{item}
         </foreach>
     </update>
 
-    <select id="findById" resultMap="subjectResultMap">
+    <select id="findById" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from rmc_subject as t18
+        from ps_proxy_info as t18
         where t18.id = #{id}
         LIMIT 0, 1
     </select>
 
-    <select id="findByName" resultMap="subjectResultMap">
+    <select id="findByName" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from rmc_subject as t18
+        from ps_proxy_info as t18
         where t18.name like CONCAT(#{name}, '%' )
         LIMIT 0, 1
     </select>
 
-    <select id="findAll" resultMap="subjectResultMap">
+    <select id="findAll" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from rmc_subject as t18
+        from ps_proxy_info as t18
     </select>
 
-    <select id="findByMap" parameterType="java.util.Map" resultMap="subjectResultMap">
+    <select id="findByMap" parameterType="java.util.Map" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from rmc_subject as t18
-        <include refid="sql_where"/>
-    </select>
-
-    <select id="findByMapWithRelationShip" parameterType="java.util.Map" resultMap="subjectResultMap">
-        select
-          <include refid="column"/>,<include refid="resource-column"/>,<include refid="subjectAuthority-column"/>
-        from rmc_subject as t18
-        inner join rmc_subject_res as t19 on t18.id = t19.subject_id
-        inner join rmc_resource as t1 on t19.res_id = t1.id
-        left join rmc_subject_authority as t20 on t18.id = t20.subject_id
+        from ps_proxy_info as t18
         <include refid="sql_where"/>
     </select>
 
     <select id="getCount" parameterType="java.util.Map" resultType="int">
         select
         count(1)
-        from rmc_subject as t18
+        from ps_proxy_info as t18
         <include refid="sql_where"/>
     </select>
 
-    <select id="findByPage" parameterType="java.util.Map" resultMap="subjectResultMap">
+    <select id="findByPage" parameterType="java.util.Map" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from rmc_subject as t18
+        from ps_proxy_info as t18
         <include refid="sql_where"/>
         <!--
             中文字段正确排序方式如下：
@@ -265,20 +144,20 @@
     <select id="getCountWithRelationShip" parameterType="java.util.Map" resultType="int">
         select
         count(distinct t18.id)
-        from rmc_subject as t18
-        left join rmc_subject_res as t19 on t18.id = t19.subject_id
+        from ps_proxy_info as t18
+        left join ps_proxy_info_res as t19 on t18.id = t19.subject_id
         left join rmc_resource as t1 on t19.res_id = t1.id
-        left join rmc_subject_authority as t20 on t18.id = t20.subject_id
+        left join ps_proxy_info_authority as t20 on t18.id = t20.subject_id
         <include refid="sql_where"/>
     </select>
 
-    <select id="findByPageWithRelationShip" parameterType="java.util.Map" resultMap="subjectResultMap">
+    <select id="findByPageWithRelationShip" parameterType="java.util.Map" resultMap="proxyInfoResultMap">
         select
         distinct <include refid="column"/>
-        from rmc_subject as t18
-        left join rmc_subject_res as t19 on t18.id = t19.subject_id
+        from ps_proxy_info as t18
+        left join ps_proxy_info_res as t19 on t18.id = t19.subject_id
         left join rmc_resource as t1 on t19.res_id = t1.id
-        left join rmc_subject_authority as t20 on t18.id = t20.subject_id
+        left join ps_proxy_info_authority as t20 on t18.id = t20.subject_id
         <include refid="sql_where"/>
         <!--
             中文字段正确排序方式如下：

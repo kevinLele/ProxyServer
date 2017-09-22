@@ -383,7 +383,7 @@
             <properties>
                 <profile.id>development</profile.id>
                 <db.driver_class>com.mysql.jdbc.Driver</db.driver_class>
-                <db.url><![CDATA[jdbc:mysql://192.168.1.210:3306/rmc?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+                <db.url><![CDATA[jdbc:mysql://192.168.1.210:3306/ProxyServer?useUnicode=true&characterEncoding=UTF-8]]></db.url>
                 <db.username>huiqing</db.username>
                 <db.password>huiqing</db.password>
                 <log.dir>${project.basedir}/logs</log.dir>
@@ -397,7 +397,7 @@
             <properties>
                 <profile.id>it</profile.id>
                 <db.driver_class>com.mysql.jdbc.Driver</db.driver_class>
-                <db.url><![CDATA[jdbc:mysql://192.168.1.210:3306/rmc?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+                <db.url><![CDATA[jdbc:mysql://192.168.1.210:3306/ProxyServer?useUnicode=true&characterEncoding=UTF-8]]></db.url>
                 <db.username>huiqing</db.username>
                 <db.password>huiqing</db.password>
                 <log.dir>${project.basedir}/logs</log.dir>
@@ -411,7 +411,7 @@
             <properties>
                 <profile.id>production</profile.id>
                 <db.driver_class>com.mysql.jdbc.Driver</db.driver_class>
-                <db.url><![CDATA[jdbc:mysql://192.168.1.210:3306/rmc?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+                <db.url><![CDATA[jdbc:mysql://192.168.1.210:3306/ProxyServer?useUnicode=true&characterEncoding=UTF-8]]></db.url>
                 <db.username>huiqing</db.username>
                 <db.password>huiqing</db.password>
                 <log.dir>${project.basedir}/logs</log.dir>
