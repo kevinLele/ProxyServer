@@ -1,6 +1,9 @@
 package com.hq.CloudPlatform.ProxyServer.sys.proxy.Interceptor;
 
+import com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo;
+import com.hq.CloudPlatform.ProxyServer.service.IProxyInfoService;
 import com.predic8.membrane.core.exchange.Exchange;
+import com.predic8.membrane.core.http.Response;
 import com.predic8.membrane.core.interceptor.AbstractInterceptor;
 import com.predic8.membrane.core.interceptor.Outcome;
 import org.apache.commons.lang.StringUtils;
@@ -8,6 +11,9 @@ import org.eclipse.jetty.util.MultiMap;
 import org.eclipse.jetty.util.UrlEncoded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -21,7 +27,12 @@ import java.util.List;
  * Created by ZK on 8/25/2016.
  * 用于资源管理的URL重写拦截器
  */
+@Component
 public class MyRewriteInterceptor extends AbstractInterceptor {
+
+    @Autowired
+    @Qualifier("proxyInfoService")
+    private IProxyInfoService proxyInfoService;
 
     private static final Logger log = LoggerFactory.getLogger(MyRewriteInterceptor.class);
 
@@ -29,9 +40,20 @@ public class MyRewriteInterceptor extends AbstractInterceptor {
     public Outcome handleRequest(Exchange exc) throws Exception {
         // 将默认生成的目标地址清除
         exc.getDestinations().clear();
+        String key = exc.getStringProperty("key");
+
+        ProxyInfo proxyInfo = proxyInfoService.findByKey(key);
+
+        if(null == proxyInfo){
+            String msg = "请求的地址[" + exc.getOriginalRequestUri() + "]不存在！";
+            exc.setResponse(Response.badRequest(msg).build());
+
+            log.warn(msg);
+            return Outcome.ABORT;
+        }
 
         // 要访问的实际地址
-        URL realUrl = new URL("http://localhost/ProxyServer/restful/sys/testJson?bbb=2&aaa=1&aaa=%E4%B8%AD%E5%9B%BD1&c&d=3");
+        URL realUrl = new URL(proxyInfo.getOriginalUrl());
         String realPath = realUrl.getPath();
         String realQuery = realUrl.getQuery();
 
@@ -39,7 +61,6 @@ public class MyRewriteInterceptor extends AbstractInterceptor {
         String proxyUrl = exc.getOriginalHostHeader() + exc.getOriginalRequestUri();
         log.debug("Proxy URL: " + proxyUrl);
 
-        String key = exc.getStringProperty("key");
         String appendPath = exc.getStringProperty("appendPath");
         MultiMap<String> queryParams = (MultiMap<String>) exc.getProperty("queryParams");
 

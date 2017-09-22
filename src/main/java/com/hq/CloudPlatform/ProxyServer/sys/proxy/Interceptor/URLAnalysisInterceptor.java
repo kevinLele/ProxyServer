@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.MultiMap;
 import org.eclipse.jetty.util.UrlEncoded;
+import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
  * Created by Administrator on 9/13/2016.
  * 用于对用户请求进行解析，将serviceId以及authKey解析出来并存入Exchange中供之后执行的拦截器使用
  */
+@Component
 @Slf4j
 public class URLAnalysisInterceptor extends AbstractInterceptor {
 

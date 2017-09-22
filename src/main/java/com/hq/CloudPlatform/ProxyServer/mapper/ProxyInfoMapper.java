@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository("proxyInfoMapper")
 public interface ProxyInfoMapper extends BaseMapper<ProxyInfo> {
 
+    ProxyInfo findByKey(String key);
 }

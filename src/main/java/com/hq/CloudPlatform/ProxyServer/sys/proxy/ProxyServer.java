@@ -9,11 +9,14 @@ import com.predic8.membrane.core.HttpRouter;
 import com.predic8.membrane.core.rules.ServiceProxy;
 import com.predic8.membrane.core.rules.ServiceProxyKey;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by ZK on 8/25/2016.
  * 代理服务器
  */
+@Component
 @Slf4j
 public class ProxyServer {
 
@@ -21,15 +24,19 @@ public class ProxyServer {
 
     public static final int PROXY_PORT = 0;
 
-    public static void main(String[] args) {
-        try {
-            startProxy();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    @Autowired
+    private URLAnalysisInterceptor urlAnalysisInterceptor;
 
-    public static void startProxy() throws Exception {
+    @Autowired
+    private AuthInterceptor authInterceptor;
+
+    @Autowired
+    private CacheInterceptor cacheInterceptor;
+
+    @Autowired
+    private MyRewriteInterceptor rewriteInterceptor;
+
+    public void startProxy() throws Exception {
         log.info("Starting Proxy Server....begin.....");
 
         int proxyPort = Integer.parseInt(ConfigHelper.getValue("ProxyServer.port"));
@@ -39,12 +46,6 @@ public class ProxyServer {
         // 此处设置为false的目的是过滤的工作都交给URLAnalysisInterceptor来统一处理，不使用系统默认的处理方式
         key.setUsePathPattern(false);
         ServiceProxy sp = new ServiceProxy(key, PROXY_URL, PROXY_PORT);
-
-        //拦截器
-        URLAnalysisInterceptor urlAnalysisInterceptor = new URLAnalysisInterceptor();
-        AuthInterceptor authInterceptor = new AuthInterceptor();
-        CacheInterceptor cacheInterceptor = new CacheInterceptor();
-        MyRewriteInterceptor rewriteInterceptor = new MyRewriteInterceptor();
 
         sp.getInterceptors().add(urlAnalysisInterceptor);
         //sp.getInterceptors().add(authInterceptor);

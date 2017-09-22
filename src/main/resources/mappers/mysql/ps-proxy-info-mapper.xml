@@ -26,15 +26,15 @@
     </insert>
 
     <update id="update" parameterType="com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo">
-        update ps_proxy_info t18
+        update ps_proxy_info t
         <include refid="sql_update"/>
-        where t18.id=#{id}
+        where t.id=#{id}
     </update>
 
     <update id="batchUpdate" parameterType="java.util.Map">
-        update ps_proxy_info t18
+        update ps_proxy_info t
         <include refid="sql_update"/>
-        where t18.id in
+        where t.id in
         <foreach item="item" index="index"
                  collection="idList" open="(" separator="," close=")">
             #{item}
@@ -42,7 +42,7 @@
     </update>
 
     <delete id="deleteByWhere" parameterType="java.util.Map">
-        delete t18 from ps_proxy_info as t18
+        delete t from ps_proxy_info as t
         <include refid="sql_where"/>
     </delete>
 
@@ -51,7 +51,7 @@
     </delete>
 
     <update id="logicDeleteById" parameterType="java.lang.String">
-        update ps_proxy_info t18 SET t18.is_delete=1 where t18.id=#{id}
+        update ps_proxy_info t SET t.is_delete=1 where t.id=#{id}
     </update>
 
     <delete id="batchDelete" parameterType="java.util.List">
@@ -63,7 +63,7 @@
     </delete>
 
     <update id="logicBatchDelete" parameterType="java.util.List">
-        update ps_proxy_info t18 SET t18.is_delete=1 where id in
+        update ps_proxy_info t SET t.is_delete=1 where id in
         <foreach item="item" index="index"
                  collection="idList" open="(" separator="," close=")">
             #{item}
@@ -73,199 +73,113 @@
     <select id="findById" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from ps_proxy_info as t18
-        where t18.id = #{id}
+        from ps_proxy_info as t
+        where t.id = #{id}
+        LIMIT 0, 1
+    </select>
+
+    <select id="findByKey" resultMap="proxyInfoResultMap">
+        select
+        <include refid="column"/>
+        from ps_proxy_info as t
+        where t.url_key = #{key}
         LIMIT 0, 1
     </select>
 
     <select id="findByName" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from ps_proxy_info as t18
-        where t18.name like CONCAT(#{name}, '%' )
+        from ps_proxy_info as t
+        where t.name like CONCAT(#{name}, '%' )
         LIMIT 0, 1
     </select>
 
     <select id="findAll" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from ps_proxy_info as t18
+        from ps_proxy_info as t
     </select>
 
     <select id="findByMap" parameterType="java.util.Map" resultMap="proxyInfoResultMap">
         select
         <include refid="column"/>
-        from ps_proxy_info as t18
+        from ps_proxy_info as t
         <include refid="sql_where"/>
-    </select>
-
-    <select id="getCount" parameterType="java.util.Map" resultType="int">
-        select
-        count(1)
-        from ps_proxy_info as t18
-        <include refid="sql_where"/>
-    </select>
-
-    <select id="findByPage" parameterType="java.util.Map" resultMap="proxyInfoResultMap">
-        select
-        <include refid="column"/>
-        from ps_proxy_info as t18
-        <include refid="sql_where"/>
-        <!--
-            中文字段正确排序方式如下：
-            CONVERT(t.username USING gbk) COLLATE gbk_chinese_ci
-        -->
-        <choose>
-            <when test="orderFields != null and orderFields.size() > 0">
-                order by
-                <foreach collection="orderFields" index="idx" item="item" open="" separator="," close="" >
-                    <if test="item.field == 'id'">t18.id ${item.sortType}</if>
-                    <if test="item.field == 'name'">t18.name ${item.sortType}</if>
-                    <if test="item.field == 'description'">t18.description ${item.sortType}</if>
-                    <if test="item.field == 'icon'">t18.icon ${item.sortType}</if>
-                    <if test="item.field == 'createDate'">t18.create_date ${item.sortType}</if>
-                    <if test="item.field == 'creatorId'">t18.creator_id ${item.sortType}</if>
-                    <if test="item.field == 'creator'">t18.creator ${item.sortType}</if>
-                    <if test="item.field == 'updateDate'">t18.update_date ${item.sortType}</if>
-                    <if test="item.field == 'updaterId'">t18.updater_id ${item.sortType}</if>
-                    <if test="item.field == 'updater'">t18.updater ${item.sortType}</if>
-                    <if test="item.field == 'deleteDate'">t18.delete_date ${item.sortType}</if>
-                    <if test="item.field == 'deleterId'">t18.deleter_id ${item.sortType}</if>
-                    <if test="item.field == 'deleter'">t18.deleter ${item.sortType}</if>
-                    <if test="item.field == 'isDelete'">t18.is_delete ${item.sortType}</if>
-                    <if test="item.field == 'isValid'">t18.is_valid ${item.sortType}</if>
-                </foreach>
-            </when>
-            <otherwise>
-                order by t18.create_date desc
-            </otherwise>
-        </choose>
-        limit #{startRowNum}, #{pageSize}
-    </select>
-
-    <select id="getCountWithRelationShip" parameterType="java.util.Map" resultType="int">
-        select
-        count(distinct t18.id)
-        from ps_proxy_info as t18
-        left join ps_proxy_info_res as t19 on t18.id = t19.subject_id
-        left join rmc_resource as t1 on t19.res_id = t1.id
-        left join ps_proxy_info_authority as t20 on t18.id = t20.subject_id
-        <include refid="sql_where"/>
-    </select>
-
-    <select id="findByPageWithRelationShip" parameterType="java.util.Map" resultMap="proxyInfoResultMap">
-        select
-        distinct <include refid="column"/>
-        from ps_proxy_info as t18
-        left join ps_proxy_info_res as t19 on t18.id = t19.subject_id
-        left join rmc_resource as t1 on t19.res_id = t1.id
-        left join ps_proxy_info_authority as t20 on t18.id = t20.subject_id
-        <include refid="sql_where"/>
-        <!--
-            中文字段正确排序方式如下：
-            CONVERT(t.username USING gbk) COLLATE gbk_chinese_ci
-        -->
-        <choose>
-            <when test="orderFields != null and orderFields.size() > 0">
-                order by
-                <foreach collection="orderFields" index="idx" item="item" open="" separator="," close="" >
-                    <if test="item.field == 'id'">t18.id ${item.sortType}</if>
-                    <if test="item.field == 'name'">t18.name ${item.sortType}</if>
-                    <if test="item.field == 'description'">t18.description ${item.sortType}</if>
-                    <if test="item.field == 'icon'">t18.icon ${item.sortType}</if>
-                    <if test="item.field == 'createDate'">t18.create_date ${item.sortType}</if>
-                    <if test="item.field == 'creatorId'">t18.creator_id ${item.sortType}</if>
-                    <if test="item.field == 'creator'">t18.creator ${item.sortType}</if>
-                    <if test="item.field == 'updateDate'">t18.update_date ${item.sortType}</if>
-                    <if test="item.field == 'updaterId'">t18.updater_id ${item.sortType}</if>
-                    <if test="item.field == 'updater'">t18.updater ${item.sortType}</if>
-                    <if test="item.field == 'deleteDate'">t18.delete_date ${item.sortType}</if>
-                    <if test="item.field == 'deleterId'">t18.deleter_id ${item.sortType}</if>
-                    <if test="item.field == 'deleter'">t18.deleter ${item.sortType}</if>
-                    <if test="item.field == 'isDelete'">t18.is_delete ${item.sortType}</if>
-                    <if test="item.field == 'isValid'">t18.is_valid ${item.sortType}</if>
-                </foreach>
-            </when>
-            <otherwise>
-                order by t18.create_date desc
-            </otherwise>
-        </choose>
-        limit #{startRowNum}, #{pageSize}
     </select>
 
     <sql id="sql_where">
         <where>
             <if test="id != null and id != ''">
                 <![CDATA[
-                    and t18.id = #{id}
+                    and t.id = #{id}
                 ]]>
             </if>
             <if test="name != null and name != ''">
                 <![CDATA[
-                    and t18.name like CONCAT(#{name},'%' )
+                    and t.name like CONCAT(#{name},'%' )
                 ]]>
             </if>
             <if test="description != null and description != ''">
                 <![CDATA[
-                    and t18.description = #{description}
+                    and t.description = #{description}
                 ]]>
             </if>
             <if test="icon != null and icon != ''">
                 <![CDATA[
-                    and t18.icon = #{icon}
+                    and t.icon = #{icon}
                 ]]>
             </if>
             <if test="createDate != null and createDate != ''">
                 <![CDATA[
-                    and t18.create_date = #{createDate}
+                    and t.create_date = #{createDate}
                 ]]>
             </if>
             <if test="creatorId != null and creatorId != ''">
                 <![CDATA[
-                    and t18.creator_id = #{creatorId}
+                    and t.creator_id = #{creatorId}
                 ]]>
             </if>
             <if test="creator != null and creator != ''">
                 <![CDATA[
-                    and t18.creator = #{creator}
+                    and t.creator = #{creator}
                 ]]>
             </if>
             <if test="updateDate != null and updateDate != ''">
                 <![CDATA[
-                    and t18.update_date = #{updateDate}
+                    and t.update_date = #{updateDate}
                 ]]>
             </if>
             <if test="updaterId != null and updaterId != ''">
                 <![CDATA[
-                    and t18.updater_id = #{updaterId}
+                    and t.updater_id = #{updaterId}
                 ]]>
             </if>
             <if test="updater != null and updater != ''">
                 <![CDATA[
-                    and t18.updater = #{updater}
+                    and t.updater = #{updater}
                 ]]>
             </if>
             <if test="deleteDate != null and deleteDate != ''">
                 <![CDATA[
-                    and t18.delete_date = #{deleteDate}
+                    and t.delete_date = #{deleteDate}
                 ]]>
             </if>
             <if test="deleterId != null and deleterId != ''">
                 <![CDATA[
-                    and t18.deleter_id = #{deleterId}
+                    and t.deleter_id = #{deleterId}
                 ]]>
             </if>
             <if test="deleter != null and deleter != ''">
                 <![CDATA[
-                    and t18.deleter = #{deleter}
+                    and t.deleter = #{deleter}
                 ]]>
             </if>
                 <![CDATA[
-                    and t18.is_delete = 0
+                    and t.is_delete = 0
                 ]]>
             <if test="isValid != null and isValid != ''">
                 <![CDATA[
-                    and t18.is_valid = #{isValid}
+                    and t.is_valid = #{isValid}
                 ]]>
             </if>
 
@@ -276,77 +190,77 @@
         <set>
             <if test="id != null and id != ''">
                 <![CDATA[
-                    t18.id = #{id},
+                    t.id = #{id},
                 ]]>
             </if>
             <if test="name != null and name != ''">
                 <![CDATA[
-                    t18.name = #{name},
+                    t.name = #{name},
                 ]]>
             </if>
             <if test="description != null and description != ''">
                 <![CDATA[
-                    t18.description = #{description},
+                    t.description = #{description},
                 ]]>
             </if>
             <if test="icon != null and icon != ''">
                 <![CDATA[
-                    t18.icon = #{icon},
+                    t.icon = #{icon},
                 ]]>
             </if>
             <if test="createDate != null and createDate != ''">
                 <![CDATA[
-                    t18.create_date = #{createDate},
+                    t.create_date = #{createDate},
                 ]]>
             </if>
             <if test="creatorId != null and creatorId != ''">
                 <![CDATA[
-                    t18.creator_id = #{creatorId},
+                    t.creator_id = #{creatorId},
                 ]]>
             </if>
             <if test="creator != null and creator != ''">
                 <![CDATA[
-                    t18.creator = #{creator},
+                    t.creator = #{creator},
                 ]]>
             </if>
             <if test="updateDate != null and updateDate != ''">
                 <![CDATA[
-                    t18.update_date = #{updateDate},
+                    t.update_date = #{updateDate},
                 ]]>
             </if>
             <if test="updaterId != null and updaterId != ''">
                 <![CDATA[
-                    t18.updater_id = #{updaterId},
+                    t.updater_id = #{updaterId},
                 ]]>
             </if>
             <if test="updater != null and updater != ''">
                 <![CDATA[
-                    t18.updater = #{updater},
+                    t.updater = #{updater},
                 ]]>
             </if>
             <if test="deleteDate != null and deleteDate != ''">
                 <![CDATA[
-                    t18.delete_date = #{deleteDate},
+                    t.delete_date = #{deleteDate},
                 ]]>
             </if>
             <if test="deleterId != null and deleterId != ''">
                 <![CDATA[
-                    t18.deleter_id = #{deleterId},
+                    t.deleter_id = #{deleterId},
                 ]]>
             </if>
             <if test="deleter != null and deleter != ''">
                 <![CDATA[
-                    t18.deleter = #{deleter},
+                    t.deleter = #{deleter},
                 ]]>
             </if>
             <if test="isDelete != null and isDelete != ''">
                 <![CDATA[
-                    t18.is_delete = #{isDelete},
+                    t.is_delete = #{isDelete},
                 ]]>
             </if>
             <if test="isValid != null and isValid != ''">
                 <![CDATA[
-                    t18.is_valid = #{isValid},
+                    t.is_valid = #{isValid},
                 ]]>
             </if>
         </set>

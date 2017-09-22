@@ -1,6 +1,7 @@
 package com.hq.CloudPlatform.ProxyServer.service.impl;
 
 import com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo;
+import com.hq.CloudPlatform.ProxyServer.exception.ServiceException;
 import com.hq.CloudPlatform.ProxyServer.mapper.BaseMapper;
 import com.hq.CloudPlatform.ProxyServer.mapper.ProxyInfoMapper;
 import com.hq.CloudPlatform.ProxyServer.service.IProxyInfoService;
@@ -21,5 +22,18 @@ public class ProxyInfoServiceImpl extends BaseServiceImpl<ProxyInfo> implements 
     @Override
     public BaseMapper<ProxyInfo> getBaseMapper() {
         return proxyInfoMapper;
+    }
+
+    @Override
+    public ProxyInfo findByKey(String key) throws ServiceException {
+        ProxyInfo entity;
+
+        try {
+            entity = proxyInfoMapper.findByKey(key);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+
+        return entity;
     }
 }

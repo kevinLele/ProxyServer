@@ -1,11 +1,13 @@
 package com.hq.CloudPlatform.ProxyServer.sys.proxy.Interceptor;
 
 import com.predic8.membrane.core.interceptor.AbstractInterceptor;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by ZK on 8/25/2016.
  * 用于对用户进行鉴权的拦截器
  */
+@Component
 public class AuthInterceptor extends AbstractInterceptor {
 
     /*private static final Logger log = LoggerFactory.getLogger(AuthInterceptor.class);

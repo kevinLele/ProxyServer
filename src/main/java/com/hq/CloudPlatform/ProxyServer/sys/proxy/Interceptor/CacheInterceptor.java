@@ -11,6 +11,7 @@ import com.predic8.membrane.core.util.EndOfStreamException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -20,6 +21,7 @@ import java.net.URL;
  * Created by Administrator on 9/13/2016.
  * 用于缓存响应结果的拦截器
  */
+@Component
 public class CacheInterceptor extends AbstractInterceptor {
 
     /*private static final Logger log = LoggerFactory.getLogger(CacheInterceptor.class);
