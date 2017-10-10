@@ -396,13 +396,8 @@ public abstract class BaseRestServiceImpl<Entity extends BaseEntity> implements 
             Entity entity = JSON.parseObject(jsonStr, this.getEntityClass());
 
             if (entity != null) {
-                String id = this.getService().save(entity);
-
-                if ("exists".equals(id)) {
-                    jsonView.setMessage("exists");
-                } else {
-                    jsonView.successPack(id);
-                }
+                long id = this.getService().save(entity);
+                jsonView.successPack(id);
             }
         } catch (UnauthorizedException unauthorizedException) {
             jsonView.unauthorizedPack();

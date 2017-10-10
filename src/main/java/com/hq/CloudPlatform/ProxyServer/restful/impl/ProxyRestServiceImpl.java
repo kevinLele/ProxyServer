@@ -45,7 +45,7 @@ public class ProxyRestServiceImpl implements IProxyRestService {
         entity.setType(type);
         entity.setProxyUrl(proxyUrlSB.toString());
         entity.setUrlKey(key);
-        String id = proxyInfoService.save(entity);
+        long id = proxyInfoService.save(entity);
         entity.setId(id);
 
         return JSON.toJSONString(entity);
