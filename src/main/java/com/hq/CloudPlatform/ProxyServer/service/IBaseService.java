@@ -13,7 +13,7 @@ public interface IBaseService<Entity> {
 
     Page findByPage(Page<Entity> page, String countMapperFunc, String pageMapperFunc) throws ServiceException;
 
-    String save(Entity entity) throws ServiceException;
+    long save(Entity entity) throws ServiceException;
 
     boolean update(Entity entity) throws ServiceException;
 

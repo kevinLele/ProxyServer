@@ -6,10 +6,9 @@ import com.hq.CloudPlatform.ProxyServer.mapper.BaseMapper;
 import com.hq.CloudPlatform.ProxyServer.restful.view.Page;
 import com.hq.CloudPlatform.ProxyServer.service.IBaseService;
 import com.hq.CloudPlatform.ProxyServer.utils.BeanObjectToMap;
-import com.hq.CloudPlatform.ProxyServer.utils.IDGenerator;
+import com.hq.CloudPlatform.ProxyServer.utils.SnowFlakeId;
 import com.hq.CloudPlatform.ProxyServer.utils.SysReflectionUtils;
 import com.hq.CloudPlatform.ProxyServer.utils.validation.annotation.ValidationMethod;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -79,14 +78,11 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
     @Transactional(rollbackFor = {ServiceException.class})
     @ValidationMethod
     @Override
-    public String save(Entity entity) throws ServiceException {
-        String id = IDGenerator.getID();
+    public long save(Entity entity) throws ServiceException {
+        long id = SnowFlakeId.getInstance().nextId();
 
         try {
-            if (StringUtils.isBlank(entity.getId()) || entity.getId().equalsIgnoreCase("0")) {
-                entity.setId(id);
-            }
-
+            entity.setId(id);
             entity.setCreateDate(new Date());
             this.getBaseMapper().save(entity);
         } catch (Exception e) {
@@ -106,7 +102,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity> implements IBas
         try {
             entity.setUpdateDate(new Date());
 
-            if (entity.getId() == null) {
+            if (entity.getId() == 0) {
                 return false;
             }
 

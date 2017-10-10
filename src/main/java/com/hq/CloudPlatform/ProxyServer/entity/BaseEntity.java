@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BaseEntity {
 
-    private String id;
+    private long id = 0L;
 
     private Date createDate;
 
@@ -26,11 +26,11 @@ public class BaseEntity {
 
     private String deleterId;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

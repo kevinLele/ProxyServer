@@ -50,6 +50,16 @@ public class SnowFlakeId {
 
     private long lastStamp = -1L;//上一次时间戳
 
+    private static SnowFlakeId idGenerator = null;
+
+    public static SnowFlakeId getInstance() {
+        if (null == idGenerator) {
+            idGenerator = new SnowFlakeId(1, 1);
+        }
+
+        return idGenerator;
+    }
+
     public SnowFlakeId(long datacenterId, long machineId) {
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
             throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
