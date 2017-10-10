@@ -4,7 +4,7 @@
 <mapper namespace="com.hq.CloudPlatform.ProxyServer.mapper.ProxyInfoMapper">
 
     <resultMap type="com.hq.CloudPlatform.ProxyServer.entity.ProxyInfo" id="proxyInfoResultMap">
-        <result column="id" property="id" javaType="java.lang.String"/>
+        <result column="id" property="id" javaType="java.lang.Long"/>
         <result column="original_url" property="originalUrl" javaType="java.lang.String"/>
         <result column="proxy_url" property="proxyUrl" javaType="java.lang.String"/>
         <result column="type" property="type" javaType="java.lang.String"/>
