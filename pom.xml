@@ -31,7 +31,7 @@
         <spring-data-mongodb.version>1.10.1.RELEASE</spring-data-mongodb.version>
         <redis-clients.version>2.9.0</redis-clients.version>
         <spring-redis-data.version>1.8.4.RELEASE</spring-redis-data.version>
-        <cas-client.version>3.3.3</cas-client.version>
+        <cas-client.version>3.4.1</cas-client.version>
     </properties>
 
     <dependencies>
