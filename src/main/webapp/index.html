@@ -3,6 +3,28 @@
     <meta charset=utf-8>
 </head>
 <body>
-<h2>主页面</h2>
+<h2>主页面a</h2>
+<script
+        src="http://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+<script>
+    $(function(){
+        $.ajax({
+            type: "GET",
+            url: "https://127.0.0.1:8443/ProxyServer/restful/sys/testJson",
+            headers: {
+                test: "aaaa"
+            },
+            dataType: "json",
+            success: function(result){
+                $("#test").append(JSON.stringify(result));
+            }
+        });
+    })
+</script>
+<div id="test">
+
+</div>
 </body>
 </html>
